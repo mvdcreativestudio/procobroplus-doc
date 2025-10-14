@@ -3,6 +3,7 @@ name: Deploy Zudoku Docs to GitHub Pages
 on:
   push:
     branches: ["main"]
+  workflow_dispatch:   # 👈 Esto habilita el botón "Run workflow" manualmente
 
 permissions:
   contents: read
@@ -31,10 +32,10 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Upload build artifacts
+      - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist
+          path: ./dist  # 👈 asegurate de que sea la carpeta generada por Zudoku
 
   deploy:
     environment:
