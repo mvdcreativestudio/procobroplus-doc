@@ -3,45 +3,32 @@ import type { ZudokuConfig } from "zudoku";
 const config: ZudokuConfig = {
   site: {
     logo: {
-      src: { light: "/logo-light.svg", dark: "/logo-dark.svg" },
-      alt: "Zudoku",
-      width: "130px",
+      src: { light: "/logos/procobroplus-light.svg", dark: "/logos/procobroplus-dark.svg" },
+      alt: "ProCobroPlus API",
+      width: "140px",
     },
   },
+
   navigation: [
     {
       type: "category",
-      label: "Documentation",
+      label: "Documentación",
       items: [
         {
           type: "category",
-          label: "Getting Started",
-          icon: "sparkles",
+          label: "ProCobroPlus",
+          icon: "server",
           items: [
-            "/introduction",
+            "/tenants-register",
             {
               type: "link",
               icon: "folder-cog",
               badge: {
-                label: "New",
-                color: "purple",
+                label: "v1",
+                color: "green",
               },
-              label: "API Reference",
+              label: "Referencia API",
               to: "/api",
-            },
-          ],
-        },
-        {
-          type: "category",
-          label: "Useful Links",
-          collapsible: false,
-          icon: "link",
-          items: [
-            {
-              type: "link",
-              icon: "book",
-              label: "Zudoku Docs",
-              to: "https://zudoku.dev/docs/",
             },
           ],
         },
@@ -53,7 +40,9 @@ const config: ZudokuConfig = {
       label: "API Reference",
     },
   ],
-  redirects: [{ from: "/", to: "/introduction" }],
+
+  redirects: [{ from: "/", to: "/tenants-register" }],
+
   apis: [
     {
       type: "file",
