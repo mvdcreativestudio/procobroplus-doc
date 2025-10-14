@@ -35,6 +35,7 @@ paths:
               properties:
                 name:
                   type: string
+                  minLength: 3
                   example: Test Company
                 email:
                   type: string
@@ -45,6 +46,7 @@ paths:
                   example: "123456789"
                 bank_account:
                   type: string
+                  minLength: 5
                   example: "1234567890"
                 selling_type:
                   type: string
@@ -52,6 +54,7 @@ paths:
                   example: products
                 password:
                   type: string
+                  minLength: 8
                   example: password123
                 password_confirmation:
                   type: string
