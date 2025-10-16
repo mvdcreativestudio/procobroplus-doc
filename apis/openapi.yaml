@@ -6,6 +6,72 @@ info:
 servers:
   - url: https://procobroplus.online
 paths:
+  /central-api/tenants:
+    get:
+      summary: Listar tenants
+      description: Obtiene la lista de todos los tenants registrados en el sistema central de ProCobroPlus.
+      tags: [Tenants]
+
+      security:
+        - bearerAuth: []   # <- mantiene el esquema global
+
+      parameters:
+        - name: Authorization
+          in: header
+          description: Token de autenticación Bearer (usa formato `Bearer {TOKEN}`).
+          required: true
+          schema:
+            type: string
+            example: "Bearer {TOKEN_AQUI}"
+            default: "Bearer {TOKEN_AQUI}"
+
+      responses:
+        "200":
+          description: Lista de tenants obtenida correctamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: Test Company
+                        email:
+                          type: string
+                          example: test@example.com
+                        rut:
+                          type: string
+                          example: "123456789"
+                        bank_account:
+                          type: string
+                          example: "1234567890"
+                        selling_type:
+                          type: string
+                          enum: [products, services, both]
+                          example: products
+                        created_at:
+                          type: string
+                          format: date-time
+                          example: "2024-01-15T10:30:00Z"
+                        updated_at:
+                          type: string
+                          format: date-time
+                          example: "2024-01-15T10:30:00Z"
+        "401":
+          description: Token no proporcionado
+        "403":
+          description: Token inválido
+        "500":
+          description: Error interno
+
   /central-api/tenants/register:
     post:
       summary: Registrar tenant
