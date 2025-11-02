@@ -33,38 +33,50 @@ paths:
               schema:
                 type: object
                 properties:
+                  status:
+                    type: string
+                    example: "success"
+                  message:
+                    type: string
+                    example: "Listado de tenants obtenido exitosamente"
                   data:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: integer
-                          example: 1
-                        name:
-                          type: string
-                          example: Test Company
-                        email:
-                          type: string
-                          example: test@example.com
-                        rut:
-                          type: string
-                          example: "123456789"
-                        bank_account:
-                          type: string
-                          example: "1234567890"
-                        selling_type:
-                          type: string
-                          enum: [products, services, both]
-                          example: products
-                        created_at:
-                          type: string
-                          format: date-time
-                          example: "2024-01-15T10:30:00Z"
-                        updated_at:
-                          type: string
-                          format: date-time
-                          example: "2024-01-15T10:30:00Z"
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                        example: 16
+                      tenants:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              example: "ID_DEL_TENANT"
+                            name:
+                              type: string
+                              nullable: true
+                              example: "NOMBRE_DEL_TENANT"
+                            email:
+                              type: string
+                              example: "empresa@ejemplo.com"
+                            rut:
+                              type: string
+                              nullable: true
+                              example: "1234567890"
+                            selling_type:
+                              type: string
+                              nullable: true
+                              enum: [products, services, both, ""]
+                              example: "both"
+                            merchant_id:
+                              type: string
+                              nullable: true
+                              example: "1234567890"
+                            external_id:
+                              type: string
+                              nullable: true
+                              example: "1234567890"
         "401":
           description: Token no proporcionado
         "403":
@@ -97,7 +109,7 @@ paths:
           application/json:
             schema:
               type: object
-              required: [name, email, rut, bank_account, selling_type, password, password_confirmation]
+              required: [name, email, rut, bank_account, selling_type, password, password_confirmation, merchant_id, external_id]
               properties:
                 name:
                   type: string
@@ -125,6 +137,13 @@ paths:
                 password_confirmation:
                   type: string
                   example: password123
+                merchant_id:
+                  type: string
+                  example: "1234567890"
+                external_id:
+                  type: string
+                  example: "1234567890"
+                  
       responses:
         "201":
           description: Tenant creado correctamente
