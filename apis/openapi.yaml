@@ -102,6 +102,14 @@ paths:
             type: string
             example: "Bearer {TOKEN_AQUI}"
             default: "Bearer {TOKEN_AQUI}"
+        - name: Transfer-Encoding
+          in: header
+          description: Envíar siempre chunked
+          required: true
+          schema:
+            type: string
+            example: "chunked"
+            
 
       requestBody:
         required: true
@@ -109,7 +117,7 @@ paths:
           application/json:
             schema:
               type: object
-              required: [name, email, rut, bank_account, selling_type, password, password_confirmation, merchant_id, external_id]
+              required: [name, email, rut, bank_account, selling_type, merchant_id, external_id]
               properties:
                 name:
                   type: string
@@ -119,6 +127,9 @@ paths:
                   type: string
                   format: email
                   example: test@example.com
+                phone:
+                  type: string
+                  example: "099111222"
                 rut:
                   type: string
                   example: "123456789"
@@ -130,13 +141,6 @@ paths:
                   type: string
                   enum: [products, services, both]
                   example: products
-                password:
-                  type: string
-                  minLength: 8
-                  example: password123
-                password_confirmation:
-                  type: string
-                  example: password123
                 merchant_id:
                   type: string
                   example: "1234567890"
