@@ -77,6 +77,9 @@ paths:
                               type: string
                               nullable: true
                               example: "1234567890"
+                            onboarding_status:
+                              type: string
+                              example: preactive
         "401":
           description: Token no proporcionado
         "403":
@@ -117,7 +120,7 @@ paths:
           application/json:
             schema:
               type: object
-              required: [name, email, rut, bank_account, selling_type, merchant_id, external_id]
+              required: [name, email, rut, bank_account, selling_type, merchant_id, external_id, onboarding_status]
               properties:
                 name:
                   type: string
@@ -147,6 +150,11 @@ paths:
                 external_id:
                   type: string
                   example: "1234567890"
+                onboarding_status:
+                  type: enum
+                  description: Limita los cobros a $3000 a los tenants con status preactive.
+                  enum: [preactive, active]
+                  example: preactive  
                   
       responses:
         "201":
@@ -161,6 +169,85 @@ paths:
           description: Duplicado
         "500":
           description: Error interno
+
+  /central-api/tenants/update:
+    put:
+      summary: Actualizar tenant
+      description: Actualiza un tenant existente en el sistema central de ProCobroPlus. Solo el id es requerido para identificar el tenant; el resto de los campos son opcionales.
+      tags: [Tenants]
+
+      security:
+        - bearerAuth: []
+
+      parameters:
+        - name: Authorization
+          in: header
+          description: Token de autenticación Bearer (usa formato `Bearer {TOKEN}`).
+          required: true
+          schema:
+            type: string
+            example: "Bearer {TOKEN_AQUI}"
+            default: "Bearer {TOKEN_AQUI}"
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [id]
+              properties:
+                id:
+                  type: string
+                  description: Identificador único del tenant a actualizar
+                  example: "ID_DEL_TENANT"
+                name:
+                  type: string
+                  minLength: 3
+                  example: Test Company
+                email:
+                  type: string
+                  format: email
+                  example: test@example.com
+                phone:
+                  type: string
+                  example: "099111222"
+                rut:
+                  type: string
+                  example: "123456789"
+                bank_account:
+                  type: string
+                  minLength: 5
+                  example: "1234567890"
+                selling_type:
+                  type: string
+                  enum: [products, services, both]
+                  example: products
+                merchant_id:
+                  type: string
+                  example: "1234567890"
+                external_id:
+                  type: string
+                  example: "1234567890"
+                onboarding_status:
+                  type: enum
+                  enum: [preactive, active]
+                  example: preactive
+
+      responses:
+        "200":
+          description: Tenant actualizado correctamente
+        "401":
+          description: Token no proporcionado
+        "403":
+          description: Token inválido
+        "404":
+          description: Tenant no encontrado
+        "422":
+          description: Datos inválidos
+        "500":
+          description: Error interno
+
 components:
   securitySchemes:
     bearerAuth:
